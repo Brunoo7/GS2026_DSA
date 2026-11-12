@@ -304,6 +304,9 @@ static void testes_lista_vazia(void)
 
 int main(void)
 {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);   /* acentos corretos no terminal do Windows */
+#endif
     testes_normais();
     testes_inexistentes();
     testes_invalidos();

@@ -10,8 +10,8 @@
  * Compilar:  gcc -std=c99 -Wall -Wextra -o citizen_assist main.c
  * Executar:  ./citizen_assist      (Windows: citizen_assist.exe)
  *
- * Dica (Windows): para exibir acentos corretamente no terminal, execute
- * "chcp 65001" antes do programa.
+ * Windows: o programa configura o terminal para UTF-8 ao iniciar, para
+ * exibir acentos corretamente. Salve este arquivo como UTF-8.
  */
 #include <ctype.h>
 #include <errno.h>
@@ -19,6 +19,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _WIN32
+#include <windows.h>   /* SetConsoleOutputCP: acentos corretos no terminal do Windows */
+#endif
 
 /* ================================================================== */
 /* 1) ESTRUTURAS E PROTÓTIPOS                                          */
@@ -798,6 +802,11 @@ int main(void)
 {
     Lista lista;
     char opcao[16];
+
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);   /* saída em UTF-8 */
+    SetConsoleCP(CP_UTF8);         /* entrada em UTF-8 */
+#endif
 
     lista_iniciar(&lista);
 
